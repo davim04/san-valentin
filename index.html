@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para alguien especial 🐾</title>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        #main-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 3px solid #000;
+            max-width: 400px;
+        }
+        img { width: 200px; height: auto; border-radius: 10px; }
+        h1 { color: #d32f2f; font-size: 24px; }
+        .buttons { margin-top: 20px; position: relative; height: 60px; }
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 2px solid #000;
+            transition: 0.2s;
+            margin: 0 10px;
+        }
+        #btn-si { background-color: #ff5252; color: white; }
+        #btn-no { background-color: #ddd; color: black; position: absolute; }
+    </style>
+</head>
+<body>
+
+    <div id="main-card">
+        <div id="contenido">
+            <img id="gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWJreHkyeHpxbXp1bXpxbXp1bXpxbXp1bXpxbXp1bXpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/12vVAGU6bU0rle/giphy.gif" alt="Snoopy">
+            <h1 id="pregunta">¿Quieres ser mi San Valentín? ❤️</h1>
+            <div class="buttons">
+                <button id="btn-si">SÍ</button>
+                <button id="btn-no">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnSi = document.getElementById('btn-si');
+        const pregunta = document.getElementById('pregunta');
+        const gif = document.getElementById('gif');
+        const contenido = document.getElementById('contenido');
+
+        let frasesNo = [
+            "¿Segura? 🥺",
+            "Piénsalo otra vez...",
+            "Snoopy se pondrá triste",
+            "¡Anda, di que sí!",
+            "Te daré un chocolate 🍫"
+        ];
+        let contador = 0;
+
+        // Lógica del botón NO: cambia texto y huye
+        btnNo.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+            
+            if(contador < frasesNo.length) {
+                btnNo.innerText = frasesNo[contador];
+                contador++;
+            }
+            // El botón SI crece cada vez que intentas dar a NO
+            btnSi.style.transform = `scale(${1 + contador * 0.2})`;
+        });
+
+        // Lógica del botón SÍ
+        btnSi.addEventListener('click', () => {
+            contenido.innerHTML = `
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHYzeXN4Y3F4eXN4Y3F4eXN4Y3F4eXN4Y3F4eXN4Y3F4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vz58J8shFW6BvqnYTm/giphy.gif" alt="Snoopy Feliz">
+                <h1>¡Sabía que dirías que sí! ❤️</h1>
+                <p style="font-size: 20px;">Ponte linda, nos vemos pronto. ✨</p>
+            `;
+            // Pequeña celebración de confeti (opcional)
+            document.body.style.backgroundColor = "#ffcdd2";
+        });
+    </script>
+</body>
+</html>
