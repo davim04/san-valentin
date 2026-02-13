@@ -6,7 +6,7 @@
     <title>Para alguien especial 🐾</title>
     <style>
         body {
-            background-color: #f9f9f9;
+            background-color: #fce4ec;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             display: flex;
             flex-direction: column;
@@ -15,36 +15,46 @@
             height: 100vh;
             margin: 0;
             text-align: center;
+            overflow: hidden;
         }
         #main-card {
             background: white;
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border: 3px solid #000;
-            max-width: 400px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border: 4px solid #000;
+            max-width: 450px;
+            z-index: 10;
         }
-        img { width: 200px; height: auto; border-radius: 10px; }
-        h1 { color: #d32f2f; font-size: 24px; }
-        .buttons { margin-top: 20px; position: relative; height: 60px; }
+        img { width: 220px; height: 220px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; }
+        h1 { color: #d32f2f; font-size: 26px; margin: 10px 0; }
+        .buttons { 
+            margin-top: 30px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 20px;
+            min-height: 100px;
+        }
         button {
-            padding: 10px 25px;
-            font-size: 18px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
             cursor: pointer;
-            border-radius: 10px;
-            border: 2px solid #000;
-            transition: 0.2s;
-            margin: 0 10px;
+            border-radius: 15px;
+            border: 3px solid #000;
+            transition: all 0.2s ease;
         }
-        #btn-si { background-color: #ff5252; color: white; }
-        #btn-no { background-color: #ddd; color: black; position: absolute; }
+        #btn-si { background-color: #4caf50; color: white; z-index: 100; }
+        #btn-no { background-color: #f44336; color: white; position: absolute; }
+        .mensaje-final { font-size: 22px; color: #c2185b; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="main-card">
         <div id="contenido">
-            <img id="gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWJreHkyeHpxbXp1bXpxbXp1bXpxbXp1bXpxbXp1bXpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/12vVAGU6bU0rle/giphy.gif" alt="Snoopy">
+            <img id="snoopy-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWJreHkyeHpxbXp1bXpxbXp1bXpxbXp1bXpxbXp1bXpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/12vVAGU6bU0rle/giphy.gif" alt="Snoopy">
             <h1 id="pregunta">¿Quieres ser mi San Valentín? ❤️</h1>
             <div class="buttons">
                 <button id="btn-si">SÍ</button>
@@ -56,42 +66,63 @@
     <script>
         const btnNo = document.getElementById('btn-no');
         const btnSi = document.getElementById('btn-si');
+        const snoopyImg = document.getElementById('snoopy-img');
         const pregunta = document.getElementById('pregunta');
-        const gif = document.getElementById('gif');
         const contenido = document.getElementById('contenido');
 
-        let frasesNo = [
+        // Imágenes de Snoopy para el botón NO
+        const imagenesNo = [
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTR0bm1idW9idXpueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26ufcVAp3AiJJsrIs/giphy.gif", // Triste
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6bnZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OPU6wYal8IDURZOaUi/giphy.gif", // Llorando
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXp6bnZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j9Y7y8VfyZpx6/giphy.gif", // Pensativo
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXh6bnZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Zt8qAitYFvE6HDi/giphy.gif"  // Escribiendo
+        ];
+
+        const frasesNo = [
             "¿Segura? 🥺",
             "Piénsalo otra vez...",
-            "Snoopy se pondrá triste",
-            "¡Anda, di que sí!",
-            "Te daré un chocolate 🍫"
+            "Snoopy se pondrá muy triste",
+            "¡No me hagas esto!",
+            "Te daré muchos chocolates 🍫",
+            "¡Mira mi carita!",
+            "¿En serio vas a decir que no?",
+            "¡Dime que sí por favor!",
+            "Ya no tengo más frases...",
+            "¡Solo dale al SÍ! ❤️"
         ];
+
         let contador = 0;
 
-        // Lógica del botón NO: cambia texto y huye
+        // Función para mover el botón y cambiar contenido
         btnNo.addEventListener('mouseover', () => {
+            // Mover botón
             const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
             const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
             btnNo.style.left = x + 'px';
             btnNo.style.top = y + 'px';
             
-            if(contador < frasesNo.length) {
-                btnNo.innerText = frasesNo[contador];
-                contador++;
-            }
-            // El botón SI crece cada vez que intentas dar a NO
-            btnSi.style.transform = `scale(${1 + contador * 0.2})`;
+            // Cambiar texto
+            btnNo.innerText = frasesNo[contador % frasesNo.length];
+            
+            // Cambiar imagen de Snoopy
+            snoopyImg.src = imagenesNo[contador % imagenesNo.length];
+
+            // El botón SÍ crece cada vez más (aumento de 0.4 por vez)
+            contador++;
+            const nuevaEscala = 1 + (contador * 0.4);
+            btnSi.style.transform = `scale(${nuevaEscala})`;
+            
+            // Ajustar el z-index para que el SI siempre esté por encima si crecen mucho
+            btnSi.style.zIndex = contador + 100;
         });
 
-        // Lógica del botón SÍ
+        // Al darle al SÍ
         btnSi.addEventListener('click', () => {
             contenido.innerHTML = `
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHYzeXN4Y3F4eXN4Y3F4eXN4Y3F4eXN4Y3F4eXN4Y3F4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vz58J8shFW6BvqnYTm/giphy.gif" alt="Snoopy Feliz">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmZ6bnZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vz58J8shFW6BvqnYTm/giphy.gif" alt="Snoopy con corazón">
                 <h1>¡Sabía que dirías que sí! ❤️</h1>
-                <p style="font-size: 20px;">Ponte linda, nos vemos pronto. ✨</p>
+                <p class="mensaje-final">Ponte linda, nos vemos pronto. ✨</p>
             `;
-            // Pequeña celebración de confeti (opcional)
             document.body.style.backgroundColor = "#ffcdd2";
         });
     </script>
